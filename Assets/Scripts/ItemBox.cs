@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ItemBox : MonoBehaviour
 {
+    //slotsにslot要素をコードから入れる方法
+
     //Slotが空いてたら、左から入れていく
     [SerializeField] Slot[] slots;
+    [SerializeField]Slot selectiedSlot = null;
     //どこでも実行できるやつ
     public static ItemBox instance;
     private void Awake()
@@ -13,6 +16,7 @@ public class ItemBox : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            slots = GetComponentsInChildren<Slot>();
         }
     }
     //PickupObjがクリックされたら、スロットにアイテムを入れる
@@ -26,20 +30,20 @@ public class ItemBox : MonoBehaviour
                 break;
             }
         }
-        /*
-        if (slots[0].IsEmpty())
+    }
+
+    public void OnSelectSlot(int position)
+    {
+        //一旦全てのスロットの選択パネルを非表示
+        foreach (Slot slot in slots)
         {
-            slots[0].SetItem(item);
+            slot.HideBGPanel();
         }
-        else if (slots[1].IsEmpty())
+        //選択されたスロットの選択パネルを表示
+        if (slots[position].OnSelected())
         {
-            slots[1].SetItem(item);
+            selectiedSlot = slots[position];
         }
-        else if (slots[2].IsEmpty())
-        {
-            slots[3].SetItem(item);
-        }
-        */
-        //Debug.Log(item.type);
+        
     }
 }

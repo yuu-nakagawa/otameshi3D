@@ -8,11 +8,16 @@ public class Slot : MonoBehaviour
     //アイテム(データ)を受け取るために変数を用意する
     Item item;
     // アイテムを受け取ったら画像をスロットに表示してやる
-    Image image;
-
+    [SerializeField] Image image;
+    [SerializeField] GameObject backgroundPanel;
     private void Awake()
     {
-        image = GetComponent<Image>();
+        //image = GetComponent<Image>();
+    }
+
+    private void Start()
+    {
+        backgroundPanel.SetActive(false);
     }
 
     public bool IsEmpty()
@@ -33,5 +38,20 @@ public class Slot : MonoBehaviour
     void UpdateImage(Item item)
     {
         image.sprite = item.sprite;
+    }
+
+    public bool OnSelected()
+    {
+        if (item == null)
+        {
+            return false;
+        }
+        backgroundPanel.SetActive(true);
+        return true;
+    }
+
+    public void HideBGPanel()
+    {
+        backgroundPanel.SetActive(false);
     }
 }

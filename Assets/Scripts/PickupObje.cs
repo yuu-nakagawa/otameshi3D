@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class PickupObje : MonoBehaviour
 {
-    //クリックしたらログを出す
-    //[SerializeField] Item.Type item;
-    [SerializeField] Item item;
+    [SerializeField] Item.Type itemType;
+    Item item;
+
+    private void Start()
+    {
+        //itemTypeに応じてitemを生成する
+        item = ItemGenerater.instance.Spawn(itemType);
+    }
     public void OnClickObj()
     {
         ItemBox.instance.SetItem(item);
