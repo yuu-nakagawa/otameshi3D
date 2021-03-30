@@ -8,7 +8,7 @@ public class ItemBox : MonoBehaviour
 
     //Slotが空いてたら、左から入れていく
     [SerializeField] Slot[] slots;
-    [SerializeField]Slot selectiedSlot = null;
+    [SerializeField]Slot selectedSlot = null;
     //どこでも実行できるやつ
     public static ItemBox instance;
     private void Awake()
@@ -39,11 +39,36 @@ public class ItemBox : MonoBehaviour
         {
             slot.HideBGPanel();
         }
+        selectedSlot = null;
+
         //選択されたスロットの選択パネルを表示
         if (slots[position].OnSelected())
         {
-            selectiedSlot = slots[position];
+            selectedSlot = slots[position];
         }
-        
     }
-}
+
+    //アイテムの使用を試みる&使えるなら使ってしまう
+    public bool TryUseItem()
+    {
+        //選択スロットがあるかどうか
+        if (selectedSlot == null)
+        {
+            return false;
+        }
+        if (selectedSlot.GetItem().type == Item.Type.Cube)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public Item GetSelectedItem()
+    {
+        if (selectedSlot == null)
+        {
+            return null;
+        }
+        return selectedSlot.GetItem();
+    }
+ }

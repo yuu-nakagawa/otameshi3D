@@ -35,6 +35,10 @@ public class Slot : MonoBehaviour
         UpdateImage(item);
     }
 
+    public Item GetItem()
+    {
+        return item;
+    }
     void UpdateImage(Item item)
     {
         image.sprite = item.sprite;
