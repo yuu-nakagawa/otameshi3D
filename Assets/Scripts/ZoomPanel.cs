@@ -10,7 +10,6 @@ public class ZoomPanel : MonoBehaviour
     //Zoomボタンが押されたら、パネルを表示する
     public void ShowPanel()
     {
-        panel.SetActive(true);
         Item item = ItemBox.instance.GetSelectedItem();
         if (item != null)
         {
