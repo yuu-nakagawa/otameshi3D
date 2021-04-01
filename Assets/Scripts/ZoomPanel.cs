@@ -5,6 +5,8 @@ using UnityEngine;
 public class ZoomPanel : MonoBehaviour
 {
     [SerializeField] GameObject panel;
+    [SerializeField] Transform objPearent;
+    GameObject zoomObj;
     // やること
     //アイテムを選択していたら
     //Zoomボタンが押されたら、パネルを表示する
@@ -14,6 +16,10 @@ public class ZoomPanel : MonoBehaviour
         if (item != null)
         {
             panel.SetActive(true);
+            //アイテムを表示
+            //ObjParentにアイテムを生成する
+            GameObject zoomObjPrefab = ItemGenerater.instance.GetZoomItem(item.type);
+            zoomObj = Instantiate(zoomObjPrefab, objPearent);
         }
     }
     //アイテムを表示
@@ -21,5 +27,6 @@ public class ZoomPanel : MonoBehaviour
     public void ClosePanel()
     {
         panel.SetActive(false);
+        Destroy(zoomObj);
     }
 }
