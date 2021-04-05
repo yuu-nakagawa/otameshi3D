@@ -7,6 +7,11 @@ public class ZoomPanel : MonoBehaviour
     [SerializeField] GameObject panel;
     [SerializeField] Transform objPearent;
     GameObject zoomObj;
+
+    private void Start()
+    {
+        panel.SetActive(false);
+    }
     // やること
     //アイテムを選択していたら
     //Zoomボタンが押されたら、パネルを表示する
@@ -15,6 +20,7 @@ public class ZoomPanel : MonoBehaviour
         Item item = ItemBox.instance.GetSelectedItem();
         if (item != null)
         {
+            Destroy(zoomObj);
             panel.SetActive(true);
             //アイテムを表示
             //ObjParentにアイテムを生成する
