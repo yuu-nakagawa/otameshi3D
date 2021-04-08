@@ -10,14 +10,26 @@ public class CameraManager : MonoBehaviour
     //・mainの全体を回転するカメラ
     //・ズームしたときのカメラ
 
+    Camera currentCamera;
+    Camera mainCamera;
+
+    //どのファイルからでも関数が実行できる
+    public static CameraManager instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+
     //全体を回転するカメラのポジションを作成
     [SerializeField] Transform[] mainCameraTransforms = default;
     int currentMainPosition;
     void Start()
     {
+        mainCamera = Camera.main;
+        currentCamera = Camera.main;
         currentMainPosition = 0;
-        Camera.main.transform.position = mainCameraTransforms[currentMainPosition].position;
-        Camera.main.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
+        currentCamera.transform.position = mainCameraTransforms[currentMainPosition].position;
+        currentCamera.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
     }
     
     public void TurnLeft()
@@ -27,8 +39,8 @@ public class CameraManager : MonoBehaviour
         {
             currentMainPosition = mainCameraTransforms.Length -1;
         }
-        Camera.main.transform.position = mainCameraTransforms[currentMainPosition].position;
-        Camera.main.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
+        currentCamera.transform.position = mainCameraTransforms[currentMainPosition].position;
+        currentCamera.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
     }
 
     public void TurnRight()
@@ -38,7 +50,20 @@ public class CameraManager : MonoBehaviour
         {
             currentMainPosition = 0;
         }
-        Camera.main.transform.position = mainCameraTransforms[currentMainPosition].position;
-        Camera.main.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
+        currentCamera.transform.position = mainCameraTransforms[currentMainPosition].position;
+        currentCamera.transform.rotation = mainCameraTransforms[currentMainPosition].rotation;
+    }
+
+    public void SetZoomCamera(Camera camera)
+    {
+        currentCamera.gameObject.SetActive(false);
+        camera.gameObject.SetActive(true);
+        currentCamera = camera;
+    }
+    public void OnBackButton()
+    {
+        mainCamera.gameObject.SetActive(true);
+        currentCamera.gameObject.SetActive(false);
+        currentCamera = mainCamera;
     }
 }

@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class CameraZoomObj : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Camera zoomCamera;
+    // クリックしたら、用意してあるカメラに切り替える
+   public void OnClickThis()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Debug.Log("カメラ切り替え");
+        CameraManager.instance.SetZoomCamera(zoomCamera);
     }
 }
